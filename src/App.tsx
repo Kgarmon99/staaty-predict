@@ -21,7 +21,13 @@ import {
   Target,
   Activity,
   Scale,
-  Dribbble
+  Dribbble,
+  Play,
+  Calculator,
+  TrendingUp,
+  Award,
+  Layers,
+  ChevronDown
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { 
@@ -55,13 +61,19 @@ export function App() {
   const [selectedUfc, setSelectedUfc] = useState<UFCMatchup>(UFC_MATCHUPS[0]);
   const [selectedLeague, setSelectedLeague] = useState<'NBA' | 'WNBA' | 'NCAAM' | 'NCAAW'>('NBA');
   
-  // Modals
+  // Modals & Drawers
   const [showJudgeModal, setShowJudgeModal] = useState<boolean>(false);
   const [showPitchDeck, setShowPitchDeck] = useState<boolean>(false);
   const [pitchSlide, setPitchSlide] = useState<number>(0);
   const [showTicketModal, setShowTicketModal] = useState<boolean>(false);
   const [copiedTicket, setCopiedTicket] = useState<boolean>(false);
-  
+  const [showEvCalc, setShowEvCalc] = useState<boolean>(false);
+  const [showSimDrawer, setShowSimDrawer] = useState<boolean>(false);
+  const [simStep, setSimStep] = useState<number>(0);
+
+  // EV Calculator state
+  const [bookOdds, setBookOdds] = useState<number>(-220);
+
   const [simulating, setSimulating] = useState<boolean>(false);
 
   // Sandbox Custom Matchup State
@@ -95,7 +107,7 @@ export function App() {
   };
 
   const triggerConfetti = () => {
-    confetti({ particleCount: 120, spread: 90, origin: { y: 0.5 } });
+    confetti({ particleCount: 140, spread: 100, origin: { y: 0.5 } });
   };
 
   const handleRunTest = () => {
@@ -106,11 +118,34 @@ export function App() {
     }, 450);
   };
 
+  const handleStartPlayByPlay = () => {
+    setShowSimDrawer(true);
+    setSimStep(1);
+    const interval = setInterval(() => {
+      setSimStep(prev => {
+        if (prev >= 4) {
+          clearInterval(interval);
+          triggerConfetti();
+          return 4;
+        }
+        return prev + 1;
+      });
+    }, 900);
+  };
+
   const handleCopyTicket = () => {
     setCopiedTicket(true);
     triggerConfetti();
     setTimeout(() => setCopiedTicket(false), 2500);
   };
+
+  // EV Calculations
+  const impliedBookProb = bookOdds < 0 
+    ? Math.abs(bookOdds) / (Math.abs(bookOdds) + 100) * 100
+    : 100 / (bookOdds + 100) * 100;
+  
+  const modelProb = sport === 'ufc' ? selectedUfc.modelOutput.winProbA : selectedBball.modelOutput.homeWinProb;
+  const evPercentage = ((modelProb - impliedBookProb) / impliedBookProb) * 100;
 
   const PITCH_SLIDES = [
     {
@@ -151,7 +186,7 @@ export function App() {
   ];
 
   return (
-    <div className="min-h-screen text-[#090B0A] flex flex-col font-['Inter',sans-serif] pb-12 sm:pb-8">
+    <div className="min-h-screen text-[#090B0A] flex flex-col font-['Inter',sans-serif] pb-24 sm:pb-16">
       
       {/* Top Header */}
       <header className="border-b-2 border-[#090B0A] bg-[#FFFFFF] sticky top-0 z-40">
@@ -174,7 +209,7 @@ export function App() {
             </div>
           </div>
 
-          {/* Clean Sport & Sandbox Selector */}
+          {/* Sport & Sandbox Selector */}
           <div className="flex items-center bg-[#FFFFFF] p-1 rounded-xl border-2 border-[#090B0A] shrink-0 no-scrollbar overflow-x-auto">
             <button
               onClick={() => setSport('ufc')}
@@ -291,19 +326,19 @@ export function App() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 pt-2">
-            <button onClick={handleRunTest} className="moneybot-btn-primary px-5 py-3 text-xs flex items-center justify-center gap-2">
-              <RefreshCw className={`w-4 h-4 ${simulating ? 'animate-spin' : ''}`} />
-              <span>{simulating ? 'RECALCULATING ML MODEL...' : 'RUN SIGNAL ENGINE'}</span>
+            <button onClick={handleStartPlayByPlay} className="moneybot-btn-primary px-5 py-3 text-xs flex items-center justify-center gap-2">
+              <Play className="w-4 h-4 fill-current" />
+              <span>SIMULATE PLAY-BY-PLAY</span>
             </button>
 
-            <button onClick={() => setShowTicketModal(true)} className="moneybot-btn-secondary px-5 py-3 text-xs flex items-center justify-center gap-2">
+            <button onClick={() => setShowEvCalc(true)} className="moneybot-btn-secondary px-5 py-3 text-xs flex items-center justify-center gap-2">
+              <Calculator className="w-4 h-4" />
+              <span>SPORTSBOOK +EV CALCULATOR</span>
+            </button>
+
+            <button onClick={() => setShowTicketModal(true)} className="bg-[#090B0A] text-[#00E676] hover:bg-[#00E676] hover:text-[#090B0A] border-2 border-[#090B0A] shadow-[3px_3px_0px_#090B0A] px-5 py-3 text-xs font-black flex items-center justify-center gap-2 transition-all">
               <Ticket className="w-4 h-4" />
               <span>EXPORT VERIFIED TICKET</span>
-            </button>
-
-            <button onClick={() => { setPitchSlide(0); setShowPitchDeck(true); }} className="bg-[#090B0A] text-[#00E676] hover:bg-[#00E676] hover:text-[#090B0A] border-2 border-[#090B0A] shadow-[3px_3px_0px_#090B0A] px-5 py-3 text-xs font-black flex items-center justify-center gap-2 transition-all">
-              <Presentation className="w-4 h-4" />
-              <span>JUDGE PITCH DECK</span>
             </button>
           </div>
         </div>
@@ -386,11 +421,16 @@ export function App() {
                     </div>
                   </div>
 
-                  <div className="pt-1">
-                    <span className="text-[10px] text-[#6F756F] font-bold uppercase font-mono block">WIN PROBABILITY</span>
-                    <div className="text-3xl font-black text-[#090B0A] font-mono">
-                      {formatOdds(selectedUfc.modelOutput.winProbA, oddsFormat)}
+                  <div className="pt-1 flex justify-between items-end">
+                    <div>
+                      <span className="text-[10px] text-[#6F756F] font-bold uppercase font-mono block">WIN PROBABILITY</span>
+                      <div className="text-3xl font-black text-[#090B0A] font-mono">
+                        {formatOdds(selectedUfc.modelOutput.winProbA, oddsFormat)}
+                      </div>
                     </div>
+                    <span className="bg-[#00E676] text-[#090B0A] font-mono font-black text-[10px] px-2 py-0.5 border border-[#090B0A]">
+                      MAX EDGE
+                    </span>
                   </div>
                 </div>
 
@@ -614,7 +654,7 @@ export function App() {
                   </div>
                 </div>
 
-                {/* Score & Win Odds Visual Cards with Official Team Logos */}
+                {/* Score & Win Odds Visual Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
                   
                   {/* Home Team Card */}
@@ -625,8 +665,8 @@ export function App() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-white border-2 border-[#090B0A] rounded-xl p-1 shrink-0 flex items-center justify-center shadow-[2px_2px_0px_#090B0A]">
-                        <img src={selectedBball.homeTeam.logo} alt={selectedBball.homeTeam.name} className="w-full h-full object-contain" />
+                      <div className="w-12 h-12 bg-white border-2 border-[#090B0A] rounded-xl p-1 shrink-0 flex items-center justify-center shadow-[2px_2px_0px_#090B0A] font-black font-mono">
+                        {selectedBball.homeTeam.abbrev}
                       </div>
                       <div>
                         <h3 className="text-2xl font-black text-[#090B0A]">{selectedBball.homeTeam.name}</h3>
@@ -659,8 +699,8 @@ export function App() {
                     </div>
 
                     <div className="flex items-center gap-3 sm:flex-row-reverse">
-                      <div className="w-12 h-12 bg-white border-2 border-[#090B0A] rounded-xl p-1 shrink-0 flex items-center justify-center shadow-[2px_2px_0px_#090B0A]">
-                        <img src={selectedBball.awayTeam.logo} alt={selectedBball.awayTeam.name} className="w-full h-full object-contain" />
+                      <div className="w-12 h-12 bg-white border-2 border-[#090B0A] rounded-xl p-1 shrink-0 flex items-center justify-center shadow-[2px_2px_0px_#090B0A] font-black font-mono">
+                        {selectedBball.awayTeam.abbrev}
                       </div>
                       <div>
                         <h3 className="text-2xl font-black text-[#090B0A]">{selectedBball.awayTeam.name}</h3>
@@ -803,6 +843,118 @@ export function App() {
         )}
 
       </main>
+
+      {/* FLOATING COMMAND HUD BAR FOR JUDGES */}
+      <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 max-w-xl w-[92%] bg-[#090B0A] text-white p-2 rounded-2xl border-2 border-[#00E676] shadow-[4px_4px_0px_#090B0A] flex items-center justify-between text-xs font-mono">
+        <div className="flex items-center gap-2 pl-2">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#00E676] animate-pulse"></div>
+          <span className="font-black text-[11px] uppercase tracking-wide">STAATY HUD</span>
+        </div>
+
+        <div className="flex items-center gap-1.5">
+          <button onClick={handleStartPlayByPlay} className="px-2.5 py-1.5 bg-[#00E676] text-[#090B0A] font-black rounded-lg text-[10px] uppercase flex items-center gap-1">
+            <Play className="w-3 h-3 fill-current" />
+            <span>SIMULATE</span>
+          </button>
+
+          <button onClick={() => setShowEvCalc(true)} className="px-2.5 py-1.5 bg-white text-[#090B0A] font-black rounded-lg text-[10px] uppercase flex items-center gap-1">
+            <Calculator className="w-3 h-3" />
+            <span>+EV</span>
+          </button>
+
+          <button onClick={() => { setPitchSlide(0); setShowPitchDeck(true); }} className="px-2.5 py-1.5 bg-zinc-800 text-[#00E676] font-black rounded-lg text-[10px] uppercase flex items-center gap-1 border border-[#00E676]/40">
+            <Presentation className="w-3 h-3" />
+            <span>PITCH</span>
+          </button>
+        </div>
+      </div>
+
+      {/* PLAY-BY-PLAY ANIMATED SIMULATION DRAWER */}
+      {showSimDrawer && (
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 z-50">
+          <div className="moneybot-box p-6 max-w-lg w-full space-y-5 relative bg-white">
+            <button onClick={() => setShowSimDrawer(false)} className="absolute top-4 right-4 text-[#090B0A] p-2 hover:opacity-70">
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-2 border-b-2 border-[#090B0A] pb-3">
+              <Activity className="w-5 h-5 text-[#00E676]" />
+              <h3 className="text-xl font-black text-[#090B0A] uppercase">LIVE PLAY-BY-PLAY SIMULATOR</h3>
+            </div>
+
+            <div className="space-y-3 font-mono text-xs">
+              <div className={`p-3 border-2 border-[#090B0A] rounded-lg transition-all ${simStep >= 1 ? 'bg-[#00E676] font-black' : 'bg-[#F4F4EE] opacity-50'}`}>
+                1. OCTAGON CONTROL: {selectedUfc.fighterA.name} dictates outside distance with reach advantage ({selectedUfc.fighterA.reach}").
+              </div>
+
+              <div className={`p-3 border-2 border-[#090B0A] rounded-lg transition-all ${simStep >= 2 ? 'bg-[#00E676] font-black' : 'bg-[#F4F4EE] opacity-50'}`}>
+                2. STRIKING DIFFERENTIAL: {selectedUfc.fighterA.name} lands +14 significant strikes in Round 1 ({selectedUfc.fighterA.slpm} SLpM).
+              </div>
+
+              <div className={`p-3 border-2 border-[#090B0A] rounded-lg transition-all ${simStep >= 3 ? 'bg-[#00E676] font-black' : 'bg-[#F4F4EE] opacity-50'}`}>
+                3. GRAPPLING THREAT: {selectedUfc.fighterA.name} defends takedown attempt ({selectedUfc.fighterA.tdDef}% TDD) & executes body lock.
+              </div>
+
+              <div className={`p-3 border-2 border-[#090B0A] rounded-lg transition-all ${simStep >= 4 ? 'bg-[#090B0A] text-[#00E676] font-black text-sm' : 'bg-[#F4F4EE] opacity-50'}`}>
+                4. MODEL OUTCOME: {selectedUfc.modelOutput.expectedWinner} VICTORY BY SUBMISSION / KO ({selectedUfc.modelOutput.winProbA}% CONFIDENCE)!
+              </div>
+            </div>
+
+            <button onClick={() => setShowSimDrawer(false)} className="moneybot-btn-primary w-full py-3 text-xs">
+              CLOSE SIMULATION
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* SPORTSBOOK +EV CALCULATOR MODAL */}
+      {showEvCalc && (
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 z-50">
+          <div className="moneybot-box p-6 max-w-lg w-full space-y-5 relative bg-white">
+            <button onClick={() => setShowEvCalc(false)} className="absolute top-4 right-4 text-[#090B0A] p-2 hover:opacity-70">
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-2 border-b-2 border-[#090B0A] pb-3">
+              <Calculator className="w-5 h-5 text-[#00E676]" />
+              <h3 className="text-xl font-black text-[#090B0A] uppercase">SPORTSBOOK +EV CALCULATOR</h3>
+            </div>
+
+            <div className="space-y-4 text-xs font-mono">
+              <div>
+                <label className="font-black text-[#090B0A] block mb-1">ENTER SPORTSBOOK ODDS (AMERICAN):</label>
+                <input
+                  type="number"
+                  value={bookOdds}
+                  onChange={(e) => setBookOdds(Number(e.target.value))}
+                  className="w-full p-2.5 border-2 border-[#090B0A] rounded-lg font-black text-sm bg-[#F4F4EE]"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-[#F4F4EE] p-3 border-2 border-[#090B0A] rounded-lg">
+                  <span className="text-[10px] text-[#6F756F] block">STAATY MODEL PROB</span>
+                  <strong className="text-base text-[#090B0A]">{modelProb.toFixed(1)}%</strong>
+                </div>
+
+                <div className="bg-[#F4F4EE] p-3 border-2 border-[#090B0A] rounded-lg">
+                  <span className="text-[10px] text-[#6F756F] block">IMPLIED BOOK PROB</span>
+                  <strong className="text-base text-[#090B0A]">{impliedBookProb.toFixed(1)}%</strong>
+                </div>
+              </div>
+
+              <div className={`p-4 border-2 border-[#090B0A] rounded-lg shadow-[3px_3px_0px_#090B0A] text-center space-y-1 ${evPercentage > 0 ? 'bg-[#00E676] text-[#090B0A]' : 'bg-red-500 text-white'}`}>
+                <span className="text-xs font-bold block uppercase">EXPECTED VALUE EDGE (+EV)</span>
+                <strong className="text-2xl font-black">{evPercentage > 0 ? `+${evPercentage.toFixed(1)}% EDGE` : `${evPercentage.toFixed(1)}% EDGE`}</strong>
+              </div>
+            </div>
+
+            <button onClick={() => setShowEvCalc(false)} className="moneybot-btn-primary w-full py-3 text-xs">
+              CLOSE CALCULATOR
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* PITCH DECK MODAL */}
       {showPitchDeck && (
