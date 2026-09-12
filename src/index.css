@@ -4,46 +4,54 @@
 
 @layer base {
   body {
-    background-color: #0B0F19;
-    color: #F8FAFC;
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #090B0A;
+    color: #F5F5F0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 }
 
-.sleeper-card {
-  background: #121826;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+.moneybot-paper {
+  background: #F5F5F0;
+  color: #090B0A;
+  border: 2px solid #090B0A;
+  box-shadow: 6px 6px 0px #00E676;
 }
 
-.sleeper-card-active {
-  border-color: #FACC15;
-  box-shadow: 0 0 25px rgba(250, 204, 21, 0.15);
+.moneybot-card {
+  background: #111513;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  transition: all 0.2s ease-in-out;
 }
 
-.sleeper-pill {
-  background: #1A2338;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.moneybot-card:hover {
+  border-color: #00E676;
+  box-shadow: 0 0 20px rgba(0, 230, 118, 0.15);
 }
 
-.sleeper-more-btn {
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(16, 185, 129, 0.2) 100%);
-  border: 1px solid rgba(34, 197, 94, 0.4);
-  color: #4ADE80;
+.moneybot-signal-btn {
+  background: #00E676;
+  color: #090B0A;
+  border: 2px solid #090B0A;
+  box-shadow: 4px 4px 0px #090B0A;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.15s ease-in-out;
 }
 
-.sleeper-more-btn:hover {
-  background: #22C55E;
-  color: #000000;
+.moneybot-signal-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #090B0A;
 }
 
-.sleeper-less-btn {
-  background: linear-gradient(135deg, rgba(236, 72, 153, 0.15) 0%, rgba(239, 68, 68, 0.2) 100%);
-  border: 1px solid rgba(236, 72, 153, 0.4);
-  color: #F472B6;
+.moneybot-signal-btn:active {
+  transform: translate(0px, 0px);
+  box-shadow: 2px 2px 0px #090B0A;
 }
 
-.sleeper-less-btn:hover {
-  background: #EC4899;
-  color: #FFFFFF;
+.moneybot-pill {
+  background: #171D1A;
+  border: 1px solid rgba(0, 230, 118, 0.2);
+  color: #00E676;
 }
