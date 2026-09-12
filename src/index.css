@@ -4,54 +4,76 @@
 
 @layer base {
   body {
-    background-color: #090B0A;
-    color: #F5F5F0;
+    background-color: #F4F4EE;
+    background-image: 
+      linear-gradient(rgba(9, 11, 10, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(9, 11, 10, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: #090B0A;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
-.moneybot-paper {
-  background: #F5F5F0;
+/* Authentic getMoneyBot.com Neo-Brutalist Card */
+.moneybot-box {
+  background: #FFFFFF;
+  border: 2.5px solid #090B0A;
+  box-shadow: 6px 6px 0px #090B0A;
+  border-radius: 12px;
+}
+
+.moneybot-box-green {
+  background: #00E676;
+  border: 2.5px solid #090B0A;
+  box-shadow: 6px 6px 0px #090B0A;
+  border-radius: 12px;
   color: #090B0A;
-  border: 2px solid #090B0A;
-  box-shadow: 6px 6px 0px #00E676;
 }
 
-.moneybot-card {
-  background: #111513;
-  border: 2px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  transition: all 0.2s ease-in-out;
-}
-
-.moneybot-card:hover {
-  border-color: #00E676;
-  box-shadow: 0 0 20px rgba(0, 230, 118, 0.15);
-}
-
-.moneybot-signal-btn {
+/* Primary Green Signal Button */
+.moneybot-btn-primary {
   background: #00E676;
   color: #090B0A;
   border: 2px solid #090B0A;
   box-shadow: 4px 4px 0px #090B0A;
   font-weight: 900;
-  letter-spacing: 0.05em;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 8px;
   transition: all 0.15s ease-in-out;
 }
 
-.moneybot-signal-btn:hover {
+.moneybot-btn-primary:hover {
   transform: translate(-2px, -2px);
   box-shadow: 6px 6px 0px #090B0A;
+  background: #00FF73;
 }
 
-.moneybot-signal-btn:active {
+.moneybot-btn-primary:active {
   transform: translate(0px, 0px);
   box-shadow: 2px 2px 0px #090B0A;
 }
 
-.moneybot-pill {
-  background: #171D1A;
-  border: 1px solid rgba(0, 230, 118, 0.2);
+/* Secondary White Button */
+.moneybot-btn-secondary {
+  background: #FFFFFF;
+  color: #090B0A;
+  border: 2px solid #090B0A;
+  box-shadow: 4px 4px 0px #090B0A;
+  font-weight: 800;
+  text-transform: uppercase;
+  border-radius: 8px;
+  transition: all 0.15s ease-in-out;
+}
+
+.moneybot-btn-secondary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #090B0A;
+  background: #F8F8F8;
+}
+
+.moneybot-signal-green {
   color: #00E676;
+  text-shadow: 1.5px 1.5px 0px #090B0A;
 }
