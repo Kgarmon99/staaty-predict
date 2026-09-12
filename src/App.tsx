@@ -17,11 +17,15 @@ import {
   ChevronRight,
   ChevronLeft,
   Sparkles,
-  Layers,
   Zap,
   TrendingUp,
   Percent,
-  Calculator
+  Flame,
+  Target,
+  Activity,
+  Award,
+  Layers,
+  Scale
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { 
@@ -278,8 +282,9 @@ export function App() {
               </span>
             </div>
 
-            <div className="bg-[#00E676] text-[#090B0A] px-2 py-0.5 border-2 border-[#090B0A] font-mono font-black text-[11px] uppercase">
-              6 / 6 MODELS &gt; 50% TARGET
+            <div className="bg-[#00E676] text-[#090B0A] px-2 py-0.5 border-2 border-[#090B0A] font-mono font-black text-[11px] uppercase flex items-center gap-1">
+              <Zap className="w-3.5 h-3.5 fill-current" />
+              <span>6 / 6 MODELS &gt; 50% TARGET</span>
             </div>
           </div>
 
@@ -331,7 +336,7 @@ export function App() {
             </div>
 
             {/* Main Prediction Box */}
-            <div className="moneybot-box p-4 sm:p-6 space-y-5 sm:space-y-6">
+            <div className="moneybot-box p-4 sm:p-6 space-y-6 sm:space-y-8 bg-white">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b-2 border-[#090B0A] pb-3 sm:pb-4 gap-2">
                 <div>
                   <span className="text-[10px] sm:text-xs font-black text-[#00E676] bg-[#090B0A] px-2 py-0.5 font-mono uppercase inline-block">
@@ -339,51 +344,184 @@ export function App() {
                   </span>
                   <h3 className="text-xl sm:text-2xl font-black text-[#090B0A] mt-1">{selectedUfc.eventName}</h3>
                 </div>
-                <div className="bg-[#00E676] text-[#090B0A] font-black text-[10px] sm:text-xs px-2.5 py-1 border-2 border-[#090B0A] shadow-[2px_2px_0px_#090B0A] uppercase font-mono inline-block self-start sm:self-auto">
-                  UFC MODEL VERIFIED 85.9% ACC
+                <div className="bg-[#00E676] text-[#090B0A] font-black text-[10px] sm:text-xs px-2.5 py-1 border-2 border-[#090B0A] shadow-[2px_2px_0px_#090B0A] uppercase font-mono inline-block self-start sm:self-auto flex items-center gap-1">
+                  <Activity className="w-3.5 h-3.5" />
+                  <span>UFC MODEL VERIFIED 85.9% ACC</span>
                 </div>
               </div>
 
-              {/* Tale of the Tape & Win Prob */}
-              <div className="space-y-2">
-                <div className="flex justify-between items-end">
-                  <div>
-                    <span className="text-[10px] sm:text-xs text-[#6F756F] font-bold block uppercase">{selectedUfc.fighterA.name} ({selectedUfc.fighterA.country})</span>
-                    <span className="text-2xl sm:text-4xl font-black text-[#090B0A] font-mono">
-                      {formatOdds(selectedUfc.modelOutput.winProbA, oddsFormat)}
-                    </span>
+              {/* RICH VISUAL FIGHTER CARD HEADERS */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                
+                {/* Fighter A Visual Card */}
+                <div className="md:col-span-5 bg-[#F9F9F6] border-2 border-[#090B0A] p-4 rounded-xl shadow-[3px_3px_0px_#090B0A] space-y-3 relative overflow-hidden">
+                  <div className="flex items-center justify-between border-b-2 border-[#090B0A] pb-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-9 h-9 bg-[#00E676] text-[#090B0A] border-2 border-[#090B0A] font-black text-sm flex items-center justify-center font-mono">
+                        {selectedUfc.fighterA.initials}
+                      </div>
+                      <div>
+                        <h4 className="font-black text-base text-[#090B0A]">{selectedUfc.fighterA.name}</h4>
+                        <span className="text-[11px] text-[#6F756F] font-mono font-bold">{selectedUfc.fighterA.nickname} • {selectedUfc.fighterA.country}</span>
+                      </div>
+                    </div>
+                    <span className="bg-[#090B0A] text-[#00E676] font-mono text-[10px] font-black px-1.5 py-0.5">RED</span>
                   </div>
-                  <div className="text-right">
-                    <span className="text-[10px] sm:text-xs text-[#6F756F] font-bold block uppercase">{selectedUfc.fighterB.name} ({selectedUfc.fighterB.country})</span>
-                    <span className="text-2xl sm:text-4xl font-black text-[#090B0A] font-mono">
-                      {formatOdds(selectedUfc.modelOutput.winProbB, oddsFormat)}
-                    </span>
+
+                  <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
+                    <div className="bg-white p-2 border border-[#090B0A] rounded">
+                      <span className="text-[9px] text-[#6F756F] block">RECORD</span>
+                      <strong className="text-[#090B0A]">{selectedUfc.fighterA.record}</strong>
+                    </div>
+                    <div className="bg-white p-2 border border-[#090B0A] rounded">
+                      <span className="text-[9px] text-[#6F756F] block">REACH</span>
+                      <strong className="text-[#090B0A]">{selectedUfc.fighterA.reach}"</strong>
+                    </div>
+                    <div className="bg-white p-2 border border-[#090B0A] rounded">
+                      <span className="text-[9px] text-[#6F756F] block">FINISH %</span>
+                      <strong className="text-[#090B0A]">{selectedUfc.fighterA.finishRate}%</strong>
+                    </div>
+                  </div>
+
+                  <div className="pt-1">
+                    <span className="text-[10px] text-[#6F756F] font-bold uppercase font-mono block">WIN PROBABILITY</span>
+                    <div className="text-3xl font-black text-[#090B0A] font-mono">
+                      {formatOdds(selectedUfc.modelOutput.winProbA, oddsFormat)}
+                    </div>
                   </div>
                 </div>
 
-                <div className="h-5 sm:h-6 w-full bg-[#EFEFEA] border-2 border-[#090B0A] rounded-lg overflow-hidden flex">
-                  <div className="bg-[#00E676] h-full border-r-2 border-[#090B0A] transition-all duration-700" style={{ width: `${selectedUfc.modelOutput.winProbA}%` }}></div>
-                  <div className="bg-white h-full transition-all duration-700" style={{ width: `${selectedUfc.modelOutput.winProbB}%` }}></div>
+                {/* VS Visual Badge */}
+                <div className="md:col-span-2 text-center py-2 flex flex-col items-center justify-center space-y-1">
+                  <div className="w-12 h-12 bg-[#00E676] border-2 border-[#090B0A] shadow-[2.5px_2.5px_0px_#090B0A] rounded-full flex items-center justify-center font-black text-base font-mono">
+                    VS
+                  </div>
+                  <span className="text-[10px] font-mono font-bold text-[#6F756F] uppercase">OCTAGON SIGNAL</span>
+                </div>
+
+                {/* Fighter B Visual Card */}
+                <div className="md:col-span-5 bg-[#F9F9F6] border-2 border-[#090B0A] p-4 rounded-xl shadow-[3px_3px_0px_#090B0A] space-y-3 relative overflow-hidden">
+                  <div className="flex items-center justify-between border-b-2 border-[#090B0A] pb-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-9 h-9 bg-[#090B0A] text-white border-2 border-[#090B0A] font-black text-sm flex items-center justify-center font-mono">
+                        {selectedUfc.fighterB.initials}
+                      </div>
+                      <div>
+                        <h4 className="font-black text-base text-[#090B0A]">{selectedUfc.fighterB.name}</h4>
+                        <span className="text-[11px] text-[#6F756F] font-mono font-bold">{selectedUfc.fighterB.nickname} • {selectedUfc.fighterB.country}</span>
+                      </div>
+                    </div>
+                    <span className="bg-[#090B0A] text-white font-mono text-[10px] font-black px-1.5 py-0.5">BLUE</span>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
+                    <div className="bg-white p-2 border border-[#090B0A] rounded">
+                      <span className="text-[9px] text-[#6F756F] block">RECORD</span>
+                      <strong className="text-[#090B0A]">{selectedUfc.fighterB.record}</strong>
+                    </div>
+                    <div className="bg-white p-2 border border-[#090B0A] rounded">
+                      <span className="text-[9px] text-[#6F756F] block">REACH</span>
+                      <strong className="text-[#090B0A]">{selectedUfc.fighterB.reach}"</strong>
+                    </div>
+                    <div className="bg-white p-2 border border-[#090B0A] rounded">
+                      <span className="text-[9px] text-[#6F756F] block">FINISH %</span>
+                      <strong className="text-[#090B0A]">{selectedUfc.fighterB.finishRate}%</strong>
+                    </div>
+                  </div>
+
+                  <div className="pt-1">
+                    <span className="text-[10px] text-[#6F756F] font-bold uppercase font-mono block">WIN PROBABILITY</span>
+                    <div className="text-3xl font-black text-[#6F756F] font-mono">
+                      {formatOdds(selectedUfc.modelOutput.winProbB, oddsFormat)}
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Split Win Probability Gauge Bar */}
+              <div className="space-y-2">
+                <div className="h-6 w-full bg-[#EFEFEA] border-2 border-[#090B0A] rounded-lg overflow-hidden flex shadow-[2px_2px_0px_#090B0A]">
+                  <div className="bg-[#00E676] h-full border-r-2 border-[#090B0A] transition-all duration-700 flex items-center justify-start px-2 font-mono text-xs font-black" style={{ width: `${selectedUfc.modelOutput.winProbA}%` }}>
+                    {selectedUfc.fighterA.name.split(' ')[1]} {selectedUfc.modelOutput.winProbA}%
+                  </div>
+                  <div className="bg-[#090B0A] text-white h-full transition-all duration-700 flex items-center justify-end px-2 font-mono text-xs font-black" style={{ width: `${selectedUfc.modelOutput.winProbB}%` }}>
+                    {selectedUfc.modelOutput.winProbB}% {selectedUfc.fighterB.name.split(' ')[1]}
+                  </div>
+                </div>
+              </div>
+
+              {/* TALE OF THE TAPE COMPARISON MATRIX */}
+              <div className="bg-[#F9F9F6] p-4 border-2 border-[#090B0A] rounded-xl space-y-3">
+                <div className="flex items-center gap-2 border-b-2 border-[#090B0A] pb-2 text-xs font-black uppercase text-[#090B0A]">
+                  <Scale className="w-4 h-4 text-[#00E676]" />
+                  <span>TALE OF THE TAPE — STAT COMPARISON MATRIX</span>
+                </div>
+
+                <div className="space-y-2.5 text-xs font-mono">
+                  
+                  {/* Reach Bar */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between font-bold text-[#090B0A]">
+                      <span className={selectedUfc.fighterA.reach > selectedUfc.fighterB.reach ? 'text-[#00E676] bg-[#090B0A] px-1' : ''}>{selectedUfc.fighterA.reach}"</span>
+                      <span className="text-[#6F756F]">REACH DIFFERENTIAL</span>
+                      <span className={selectedUfc.fighterB.reach > selectedUfc.fighterA.reach ? 'text-[#00E676] bg-[#090B0A] px-1' : ''}>{selectedUfc.fighterB.reach}"</span>
+                    </div>
+                    <div className="h-2 w-full bg-[#EFEFEA] border border-[#090B0A] rounded flex overflow-hidden">
+                      <div className="bg-[#00E676] h-full" style={{ width: `${(selectedUfc.fighterA.reach / 88) * 100}%` }}></div>
+                      <div className="bg-[#090B0A] h-full" style={{ width: `${(selectedUfc.fighterB.reach / 88) * 100}%` }}></div>
+                    </div>
+                  </div>
+
+                  {/* TD Defense Bar */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between font-bold text-[#090B0A]">
+                      <span className={selectedUfc.fighterA.tdDef > selectedUfc.fighterB.tdDef ? 'text-[#00E676] bg-[#090B0A] px-1' : ''}>{selectedUfc.fighterA.tdDef}%</span>
+                      <span className="text-[#6F756F]">TAKEDOWN DEFENSE</span>
+                      <span className={selectedUfc.fighterB.tdDef > selectedUfc.fighterA.tdDef ? 'text-[#00E676] bg-[#090B0A] px-1' : ''}>{selectedUfc.fighterB.tdDef}%</span>
+                    </div>
+                    <div className="h-2 w-full bg-[#EFEFEA] border border-[#090B0A] rounded flex overflow-hidden">
+                      <div className="bg-[#00E676] h-full" style={{ width: `${selectedUfc.fighterA.tdDef}%` }}></div>
+                      <div className="bg-[#090B0A] h-full" style={{ width: `${selectedUfc.fighterB.tdDef}%` }}></div>
+                    </div>
+                  </div>
+
+                  {/* Striking Accuracy */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between font-bold text-[#090B0A]">
+                      <span className={selectedUfc.fighterA.strAcc > selectedUfc.fighterB.strAcc ? 'text-[#00E676] bg-[#090B0A] px-1' : ''}>{selectedUfc.fighterA.strAcc}%</span>
+                      <span className="text-[#6F756F]">STRIKING ACCURACY</span>
+                      <span className={selectedUfc.fighterB.strAcc > selectedUfc.fighterA.strAcc ? 'text-[#00E676] bg-[#090B0A] px-1' : ''}>{selectedUfc.fighterB.strAcc}%</span>
+                    </div>
+                    <div className="h-2 w-full bg-[#EFEFEA] border border-[#090B0A] rounded flex overflow-hidden">
+                      <div className="bg-[#00E676] h-full" style={{ width: `${selectedUfc.fighterA.strAcc}%` }}></div>
+                      <div className="bg-[#090B0A] h-full" style={{ width: `${selectedUfc.fighterB.strAcc}%` }}></div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
               {/* Method Breakdown & Prop EV */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t-2 border-[#090B0A]">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                 
                 {/* Method Model */}
                 <div className="moneybot-box p-4 space-y-3 bg-[#F9F9F6]">
                   <div className="flex justify-between items-center text-xs font-black border-b-2 border-[#090B0A] pb-2">
-                    <span className="text-[#090B0A] uppercase tracking-wider">Win Method Breakdown</span>
+                    <span className="text-[#090B0A] uppercase tracking-wider flex items-center gap-1">
+                      <Flame className="w-3.5 h-3.5 text-amber-500 fill-current" />
+                      <span>Win Method Breakdown</span>
+                    </span>
                     <span className="bg-[#00E676] px-1.5 py-0.5 border border-[#090B0A] font-mono text-[10px] sm:text-xs">85.9% ACC</span>
                   </div>
 
                   <div className="space-y-2 text-xs font-mono">
                     {selectedUfc.modelOutput.methodProbs.map((m, idx) => (
-                      <div key={idx} className="flex justify-between items-center bg-white p-2 border-2 border-[#090B0A] rounded shadow-[2px_2px_0px_#090B0A]">
+                      <div key={idx} className="flex justify-between items-center bg-white p-2.5 border-2 border-[#090B0A] rounded shadow-[2px_2px_0px_#090B0A]">
                         <span className="text-[#090B0A] font-bold">{m.method}</span>
                         <div className="flex items-center gap-2 sm:gap-3">
-                          <span className="text-[#6F756F] text-[10px] uppercase">{m.fav}</span>
-                          <span className="font-black text-[#090B0A] bg-[#00E676] px-1.5">{formatOdds(m.prob, oddsFormat)}</span>
+                          <span className="text-[#6F756F] text-[10px] uppercase font-bold">{m.fav}</span>
+                          <span className="font-black text-[#090B0A] bg-[#00E676] px-1.5 border border-[#090B0A]">{formatOdds(m.prob, oddsFormat)}</span>
                         </div>
                       </div>
                     ))}
@@ -393,11 +531,14 @@ export function App() {
                 {/* Best Prop Bet */}
                 <div className="moneybot-box p-4 space-y-3 bg-[#F9F9F6] flex flex-col justify-between">
                   <div className="flex justify-between items-center text-xs font-black border-b-2 border-[#090B0A] pb-2">
-                    <span className="text-[#090B0A] uppercase tracking-wider">Highest EV Prop Bet</span>
+                    <span className="text-[#090B0A] uppercase tracking-wider flex items-center gap-1">
+                      <Target className="w-3.5 h-3.5 text-[#00E676]" />
+                      <span>Highest EV Prop Bet</span>
+                    </span>
                     <span className="bg-[#00E676] px-1.5 py-0.5 border border-[#090B0A] font-mono font-black">{selectedUfc.modelOutput.spreadProp.propOdds}</span>
                   </div>
 
-                  <div className="bg-[#00E676] p-3 sm:p-3.5 border-2 border-[#090B0A] shadow-[2.5px_2.5px_0px_#090B0A] rounded-lg space-y-1">
+                  <div className="bg-[#00E676] p-3.5 border-2 border-[#090B0A] shadow-[2.5px_2.5px_0px_#090B0A] rounded-lg space-y-1">
                     <div className="text-sm sm:text-base font-black text-[#090B0A]">{selectedUfc.modelOutput.spreadProp.bestPropBet}</div>
                     <p className="text-xs text-[#090B0A] font-medium">Distance: {selectedUfc.modelOutput.spreadProp.expectedDistance}</p>
                   </div>
@@ -454,46 +595,53 @@ export function App() {
             </div>
 
             {selectedBball && (
-              <div className="moneybot-box p-4 sm:p-6 space-y-5 sm:space-y-6">
+              <div className="moneybot-box p-4 sm:p-6 space-y-6 sm:space-y-8 bg-white">
                 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b-2 border-[#090B0A] pb-3 sm:pb-4 gap-2">
                   <div>
                     <span className="text-[10px] sm:text-xs font-black text-[#00E676] bg-[#090B0A] px-2 py-0.5 font-mono uppercase inline-block">{selectedBball.league} Matchup</span>
                     <h3 className="text-xl sm:text-2xl font-black text-[#090B0A] mt-1">{selectedBball.eventName}</h3>
                   </div>
-                  <div className="bg-[#00E676] text-[#090B0A] font-black text-[10px] sm:text-xs px-2.5 py-1 border-2 border-[#090B0A] shadow-[2px_2px_0px_#090B0A] uppercase font-mono inline-block self-start sm:self-auto">
-                    MODEL VERIFIED 99%+ ACC
+                  <div className="bg-[#00E676] text-[#090B0A] font-black text-[10px] sm:text-xs px-2.5 py-1 border-2 border-[#090B0A] shadow-[2px_2px_0px_#090B0A] uppercase font-mono inline-block self-start sm:self-auto flex items-center gap-1">
+                    <Activity className="w-3.5 h-3.5" />
+                    <span>MODEL VERIFIED 99%+ ACC</span>
                   </div>
                 </div>
 
-                {/* Score & Win Odds */}
+                {/* Score & Win Odds Visual Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
                   
-                  {/* Home Team */}
-                  <div className="sm:col-span-5 space-y-1.5">
-                    <span className="text-[10px] bg-[#090B0A] text-[#00E676] px-2 py-0.5 font-mono font-bold inline-block">HOME</span>
-                    <h3 className="text-xl sm:text-2xl font-black text-[#090B0A]">{selectedBball.homeTeam.name}</h3>
+                  {/* Home Team Card */}
+                  <div className="sm:col-span-5 bg-[#F9F9F6] border-2 border-[#090B0A] p-4 rounded-xl shadow-[3px_3px_0px_#090B0A] space-y-2">
+                    <div className="flex items-center justify-between border-b border-[#090B0A] pb-1.5">
+                      <span className="text-[10px] bg-[#090B0A] text-[#00E676] px-2 py-0.5 font-mono font-bold">HOME</span>
+                      <span className="text-xs font-mono font-bold text-[#6F756F]">STREAK: {selectedBball.homeTeam.recentForm}</span>
+                    </div>
+                    <h3 className="text-2xl font-black text-[#090B0A]">{selectedBball.homeTeam.name}</h3>
                     <p className="text-xs text-[#6F756F] font-mono">Record: {selectedBball.homeTeam.record} • Net: +{selectedBball.homeTeam.netRating}</p>
-                    <div className="text-2xl sm:text-3xl font-black text-[#090B0A] font-mono">
+                    <div className="text-2xl sm:text-3xl font-black text-[#090B0A] font-mono pt-1">
                       {formatOdds(selectedBball.modelOutput.homeWinProb, oddsFormat)} WIN
                     </div>
                   </div>
 
-                  {/* Score Center */}
-                  <div className="sm:col-span-2 text-center py-2 sm:py-0 space-y-1 bg-[#F9F9F6] sm:bg-transparent border border-[#090B0A] sm:border-0 rounded-lg">
-                    <div className="text-[10px] text-[#6F756F] uppercase font-mono font-bold">Projected Score</div>
-                    <div className="text-xl sm:text-2xl font-black text-[#090B0A] font-mono bg-[#00E676] px-2 py-0.5 sm:py-1 border-2 border-[#090B0A] shadow-[2px_2px_0px_#090B0A] inline-block">{selectedBball.modelOutput.projectedHomeScore} - {selectedBball.modelOutput.projectedAwayScore}</div>
-                    <div className="text-xs text-[#090B0A] font-bold font-mono">
-                      Spread: {selectedBball.modelOutput.projectedSpread}
+                  {/* Score Center Visual Box */}
+                  <div className="sm:col-span-2 text-center py-3 bg-[#00E676] border-2 border-[#090B0A] shadow-[3px_3px_0px_#090B0A] rounded-xl space-y-1">
+                    <div className="text-[10px] text-[#090B0A] uppercase font-mono font-black">Projected Score</div>
+                    <div className="text-2xl font-black text-[#090B0A] font-mono">{selectedBball.modelOutput.projectedHomeScore} - {selectedBball.modelOutput.projectedAwayScore}</div>
+                    <div className="text-xs text-[#090B0A] font-black font-mono">
+                      Line: {selectedBball.modelOutput.projectedSpread}
                     </div>
                   </div>
 
-                  {/* Away Team */}
-                  <div className="sm:col-span-5 space-y-1.5 sm:text-right">
-                    <span className="text-[10px] bg-[#090B0A] text-white px-2 py-0.5 font-mono font-bold inline-block">AWAY</span>
-                    <h3 className="text-xl sm:text-2xl font-black text-[#090B0A]">{selectedBball.awayTeam.name}</h3>
+                  {/* Away Team Card */}
+                  <div className="sm:col-span-5 bg-[#F9F9F6] border-2 border-[#090B0A] p-4 rounded-xl shadow-[3px_3px_0px_#090B0A] space-y-2 sm:text-right">
+                    <div className="flex items-center justify-between sm:justify-between border-b border-[#090B0A] pb-1.5">
+                      <span className="text-xs font-mono font-bold text-[#6F756F]">STREAK: {selectedBball.awayTeam.recentForm}</span>
+                      <span className="text-[10px] bg-[#090B0A] text-white px-2 py-0.5 font-mono font-bold">AWAY</span>
+                    </div>
+                    <h3 className="text-2xl font-black text-[#090B0A]">{selectedBball.awayTeam.name}</h3>
                     <p className="text-xs text-[#6F756F] font-mono">Record: {selectedBball.awayTeam.record} • Net: +{selectedBball.awayTeam.netRating}</p>
-                    <div className="text-2xl sm:text-3xl font-black text-[#6F756F] font-mono">
+                    <div className="text-2xl sm:text-3xl font-black text-[#6F756F] font-mono pt-1">
                       {formatOdds(selectedBball.modelOutput.awayWinProb, oddsFormat)} WIN
                     </div>
                   </div>
