@@ -8,25 +8,41 @@
     background-image: 
       linear-gradient(rgba(9, 11, 10, 0.05) 1px, transparent 1px),
       linear-gradient(90deg, rgba(9, 11, 10, 0.05) 1px, transparent 1px);
-    background-size: 24px 24px;
+    background-size: 20px 24px;
     color: #090B0A;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
+}
+
+/* Hide scrollbar for clean mobile swipe pills */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Authentic getMoneyBot.com Neo-Brutalist Card */
 .moneybot-box {
   background: #FFFFFF;
   border: 2.5px solid #090B0A;
-  box-shadow: 6px 6px 0px #090B0A;
+  box-shadow: 5px 5px 0px #090B0A;
   border-radius: 12px;
+}
+
+@media (min-width: 640px) {
+  .moneybot-box {
+    box-shadow: 6px 6px 0px #090B0A;
+  }
 }
 
 .moneybot-box-green {
   background: #00E676;
   border: 2.5px solid #090B0A;
-  box-shadow: 6px 6px 0px #090B0A;
+  box-shadow: 5px 5px 0px #090B0A;
   border-radius: 12px;
   color: #090B0A;
 }
@@ -36,17 +52,18 @@
   background: #00E676;
   color: #090B0A;
   border: 2px solid #090B0A;
-  box-shadow: 4px 4px 0px #090B0A;
+  box-shadow: 3.5px 3.5px 0px #090B0A;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: all 0.15s ease-in-out;
+  min-height: 44px;
 }
 
 .moneybot-btn-primary:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px #090B0A;
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px #090B0A;
   background: #00FF73;
 }
 
@@ -60,16 +77,17 @@
   background: #FFFFFF;
   color: #090B0A;
   border: 2px solid #090B0A;
-  box-shadow: 4px 4px 0px #090B0A;
+  box-shadow: 3.5px 3.5px 0px #090B0A;
   font-weight: 800;
   text-transform: uppercase;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: all 0.15s ease-in-out;
+  min-height: 44px;
 }
 
 .moneybot-btn-secondary:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px #090B0A;
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px #090B0A;
   background: #F8F8F8;
 }
 
