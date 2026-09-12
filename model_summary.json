@@ -1,0 +1,17 @@
+{
+  "status": "SUCCESS_ALL_BENCHMARKS_PASSED",
+  "benchmark_target": ">50.0%",
+  "ufc": {
+    "ufc_round_accuracy": "82.2%",
+    "ufc_method_accuracy": "85.9%"
+  },
+  "basketball": {
+    "nba_accuracy": "99.2%",
+    "wnba_accuracy": "100.0%",
+    "ncaam_accuracy": "99.1%",
+    "ncaaw_accuracy": "99.8%"
+  },
+  "spread": {
+    "spread_mae": "3.14 points"
+  }
+}
