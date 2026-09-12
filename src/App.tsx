@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { 
   Swords, 
   BarChart3, 
-  Trophy, 
   ShieldCheck, 
   RefreshCw, 
   ArrowRight, 
@@ -18,13 +17,9 @@ import {
   ChevronLeft,
   Sparkles,
   Zap,
-  TrendingUp,
-  Percent,
   Flame,
   Target,
   Activity,
-  Award,
-  Layers,
   Scale,
   Dribbble
 } from 'lucide-react';
@@ -34,9 +29,7 @@ import {
   BASKETBALL_MATCHUPS, 
   MODEL_VERIFICATION_STATS,
   UFCMatchup,
-  BasketballMatchup,
-  UFCFighter,
-  BasketballTeam
+  BasketballMatchup
 } from './data/sportsData';
 
 // Helper to convert probability % to American odds (+150, -200) or Decimal (2.50)
@@ -325,15 +318,19 @@ export function App() {
                 <button
                   key={matchup.id}
                   onClick={() => setSelectedUfc(matchup)}
-                  className={`px-3.5 py-2 text-xs font-black tracking-wider transition-all uppercase shrink-0 flex items-center gap-2 ${
+                  className={`px-4 py-2.5 text-xs font-black tracking-wider transition-all uppercase shrink-0 flex items-center gap-2 ${
                     selectedUfc.id === matchup.id
                       ? 'moneybot-btn-primary'
                       : 'moneybot-btn-secondary'
                   }`}
                 >
-                  <img src={matchup.fighterA.image} alt="" className="w-5 h-5 rounded-full object-cover border border-[#090B0A]" />
+                  <span className="w-6 h-6 bg-[#090B0A] text-[#00E676] rounded-full flex items-center justify-center font-mono font-black text-[10px]">
+                    {matchup.fighterA.initials}
+                  </span>
                   <span>{matchup.fighterA.name} vs {matchup.fighterB.name}</span>
-                  <img src={matchup.fighterB.image} alt="" className="w-5 h-5 rounded-full object-cover border border-[#090B0A]" />
+                  <span className="w-6 h-6 bg-[#090B0A] text-white rounded-full flex items-center justify-center font-mono font-black text-[10px]">
+                    {matchup.fighterB.initials}
+                  </span>
                 </button>
               ))}
             </div>
@@ -353,19 +350,22 @@ export function App() {
                 </div>
               </div>
 
-              {/* RICH VISUAL FIGHTER CARDS WITH REAL IMAGE HEADSHOTS */}
+              {/* RICH VISUAL FIGHTER CARDS */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
                 
                 {/* Fighter A Visual Card */}
                 <div className="md:col-span-5 bg-[#F9F9F6] border-2 border-[#090B0A] p-4 rounded-xl shadow-[3px_3px_0px_#090B0A] space-y-3 relative overflow-hidden">
                   <div className="flex items-center justify-between border-b-2 border-[#090B0A] pb-2">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-12 h-12 bg-[#00E676] border-2 border-[#090B0A] shadow-[2px_2px_0px_#090B0A] rounded-full overflow-hidden shrink-0 flex items-center justify-center font-black text-sm font-mono text-[#090B0A]">
-                        <img src={selectedUfc.fighterA.image} alt={selectedUfc.fighterA.name} className="w-full h-full object-cover" />
+                      <div className="w-12 h-12 bg-[#00E676] border-2 border-[#090B0A] shadow-[2px_2px_0px_#090B0A] rounded-full shrink-0 flex items-center justify-center font-black text-base font-mono text-[#090B0A]">
+                        {selectedUfc.fighterA.initials}
                       </div>
                       <div>
-                        <h4 className="font-black text-base text-[#090B0A]">{selectedUfc.fighterA.name}</h4>
-                        <span className="text-[11px] text-[#6F756F] font-mono font-bold">{selectedUfc.fighterA.nickname} • {selectedUfc.fighterA.country}</span>
+                        <div className="flex items-center gap-1">
+                          <h4 className="font-black text-base text-[#090B0A]">{selectedUfc.fighterA.name}</h4>
+                          <span className="text-xs">{selectedUfc.fighterA.country.split(' ')[1]}</span>
+                        </div>
+                        <span className="text-[11px] text-[#6F756F] font-mono font-bold block">{selectedUfc.fighterA.nickname} • {selectedUfc.fighterA.belt}</span>
                       </div>
                     </div>
                     <span className="bg-[#090B0A] text-[#00E676] font-mono text-[10px] font-black px-1.5 py-0.5">RED</span>
@@ -406,12 +406,15 @@ export function App() {
                 <div className="md:col-span-5 bg-[#F9F9F6] border-2 border-[#090B0A] p-4 rounded-xl shadow-[3px_3px_0px_#090B0A] space-y-3 relative overflow-hidden">
                   <div className="flex items-center justify-between border-b-2 border-[#090B0A] pb-2">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-12 h-12 bg-[#090B0A] border-2 border-[#090B0A] shadow-[2px_2px_0px_#090B0A] rounded-full overflow-hidden shrink-0 flex items-center justify-center font-black text-sm font-mono text-white">
-                        <img src={selectedUfc.fighterB.image} alt={selectedUfc.fighterB.name} className="w-full h-full object-cover" />
+                      <div className="w-12 h-12 bg-[#090B0A] border-2 border-[#090B0A] shadow-[2px_2px_0px_#090B0A] rounded-full shrink-0 flex items-center justify-center font-black text-base font-mono text-white">
+                        {selectedUfc.fighterB.initials}
                       </div>
                       <div>
-                        <h4 className="font-black text-base text-[#090B0A]">{selectedUfc.fighterB.name}</h4>
-                        <span className="text-[11px] text-[#6F756F] font-mono font-bold">{selectedUfc.fighterB.nickname} • {selectedUfc.fighterB.country}</span>
+                        <div className="flex items-center gap-1">
+                          <h4 className="font-black text-base text-[#090B0A]">{selectedUfc.fighterB.name}</h4>
+                          <span className="text-xs">{selectedUfc.fighterB.country.split(' ')[1]}</span>
+                        </div>
+                        <span className="text-[11px] text-[#6F756F] font-mono font-bold block">{selectedUfc.fighterB.nickname} • {selectedUfc.fighterB.belt}</span>
                       </div>
                     </div>
                     <span className="bg-[#090B0A] text-white font-mono text-[10px] font-black px-1.5 py-0.5">BLUE</span>

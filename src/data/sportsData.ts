@@ -16,7 +16,7 @@ export interface UFCFighter {
   country: string;
   color: string;
   initials: string;
-  image: string;
+  belt?: string;
 }
 
 export interface UFCMatchup {
@@ -107,9 +107,9 @@ export const UFC_MATCHUPS: UFCMatchup[] = [
       reach: 84.5,
       finishRate: 74,
       country: 'USA 🇺🇸',
-      color: 'from-blue-600 to-indigo-700',
+      color: 'from-amber-400 to-amber-600',
       initials: 'JJ',
-      image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&auto=format&fit=crop&q=80'
+      belt: '🏆 CHAMPION'
     },
     fighterB: {
       id: 'miocic',
@@ -127,9 +127,9 @@ export const UFC_MATCHUPS: UFCMatchup[] = [
       reach: 80.0,
       finishRate: 75,
       country: 'USA 🇺🇸',
-      color: 'from-red-600 to-amber-700',
+      color: 'from-slate-700 to-slate-900',
       initials: 'SM',
-      image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&auto=format&fit=crop&q=80'
+      belt: '#1 CONTENDER'
     },
     modelOutput: {
       winProbA: 71.4,
@@ -180,9 +180,9 @@ export const UFC_MATCHUPS: UFCMatchup[] = [
       reach: 79.0,
       finishRate: 83,
       country: 'Brazil 🇧🇷',
-      color: 'from-amber-500 to-emerald-600',
+      color: 'from-amber-400 to-amber-600',
       initials: 'AP',
-      image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400&auto=format&fit=crop&q=80'
+      belt: '🏆 CHAMPION'
     },
     fighterB: {
       id: 'ankalaev',
@@ -200,9 +200,9 @@ export const UFC_MATCHUPS: UFCMatchup[] = [
       reach: 75.0,
       finishRate: 60,
       country: 'Russia 🇷🇺',
-      color: 'from-[#101626] to-slate-800',
+      color: 'from-slate-700 to-slate-900',
       initials: 'MA',
-      image: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&auto=format&fit=crop&q=80'
+      belt: '#1 CONTENDER'
     },
     modelOutput: {
       winProbA: 58.6,
@@ -253,9 +253,9 @@ export const UFC_MATCHUPS: UFCMatchup[] = [
       reach: 72.0,
       finishRate: 72,
       country: 'USA 🇺🇸',
-      color: 'from-pink-500 to-purple-600',
+      color: 'from-amber-400 to-amber-600',
       initials: 'SO',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80'
+      belt: '🏆 CHAMPION'
     },
     fighterB: {
       id: 'merab',
@@ -273,9 +273,9 @@ export const UFC_MATCHUPS: UFCMatchup[] = [
       reach: 68.0,
       finishRate: 24,
       country: 'Georgia 🇬🇪',
-      color: 'from-red-700 to-slate-900',
+      color: 'from-slate-700 to-slate-900',
       initials: 'MD',
-      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80'
+      belt: '#1 CONTENDER'
     },
     modelOutput: {
       winProbA: 52.4,
