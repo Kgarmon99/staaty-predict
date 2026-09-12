@@ -25,7 +25,8 @@ import {
   Activity,
   Award,
   Layers,
-  Scale
+  Scale,
+  Dribbble
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { 
@@ -324,13 +325,15 @@ export function App() {
                 <button
                   key={matchup.id}
                   onClick={() => setSelectedUfc(matchup)}
-                  className={`px-3.5 py-2 text-xs font-black tracking-wider transition-all uppercase shrink-0 ${
+                  className={`px-3.5 py-2 text-xs font-black tracking-wider transition-all uppercase shrink-0 flex items-center gap-2 ${
                     selectedUfc.id === matchup.id
                       ? 'moneybot-btn-primary'
                       : 'moneybot-btn-secondary'
                   }`}
                 >
-                  {matchup.fighterA.name} vs {matchup.fighterB.name}
+                  <img src={matchup.fighterA.image} alt="" className="w-5 h-5 rounded-full object-cover border border-[#090B0A]" />
+                  <span>{matchup.fighterA.name} vs {matchup.fighterB.name}</span>
+                  <img src={matchup.fighterB.image} alt="" className="w-5 h-5 rounded-full object-cover border border-[#090B0A]" />
                 </button>
               ))}
             </div>
@@ -350,15 +353,15 @@ export function App() {
                 </div>
               </div>
 
-              {/* RICH VISUAL FIGHTER CARD HEADERS */}
+              {/* RICH VISUAL FIGHTER CARDS WITH REAL IMAGE HEADSHOTS */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
                 
                 {/* Fighter A Visual Card */}
                 <div className="md:col-span-5 bg-[#F9F9F6] border-2 border-[#090B0A] p-4 rounded-xl shadow-[3px_3px_0px_#090B0A] space-y-3 relative overflow-hidden">
                   <div className="flex items-center justify-between border-b-2 border-[#090B0A] pb-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-9 h-9 bg-[#00E676] text-[#090B0A] border-2 border-[#090B0A] font-black text-sm flex items-center justify-center font-mono">
-                        {selectedUfc.fighterA.initials}
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-12 h-12 bg-[#00E676] border-2 border-[#090B0A] shadow-[2px_2px_0px_#090B0A] rounded-full overflow-hidden shrink-0 flex items-center justify-center font-black text-sm font-mono text-[#090B0A]">
+                        <img src={selectedUfc.fighterA.image} alt={selectedUfc.fighterA.name} className="w-full h-full object-cover" />
                       </div>
                       <div>
                         <h4 className="font-black text-base text-[#090B0A]">{selectedUfc.fighterA.name}</h4>
@@ -402,9 +405,9 @@ export function App() {
                 {/* Fighter B Visual Card */}
                 <div className="md:col-span-5 bg-[#F9F9F6] border-2 border-[#090B0A] p-4 rounded-xl shadow-[3px_3px_0px_#090B0A] space-y-3 relative overflow-hidden">
                   <div className="flex items-center justify-between border-b-2 border-[#090B0A] pb-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-9 h-9 bg-[#090B0A] text-white border-2 border-[#090B0A] font-black text-sm flex items-center justify-center font-mono">
-                        {selectedUfc.fighterB.initials}
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-12 h-12 bg-[#090B0A] border-2 border-[#090B0A] shadow-[2px_2px_0px_#090B0A] rounded-full overflow-hidden shrink-0 flex items-center justify-center font-black text-sm font-mono text-white">
+                        <img src={selectedUfc.fighterB.image} alt={selectedUfc.fighterB.name} className="w-full h-full object-cover" />
                       </div>
                       <div>
                         <h4 className="font-black text-base text-[#090B0A]">{selectedUfc.fighterB.name}</h4>
@@ -608,25 +611,37 @@ export function App() {
                   </div>
                 </div>
 
-                {/* Score & Win Odds Visual Cards */}
+                {/* Score & Win Odds Visual Cards with Official Team Logos */}
                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
                   
                   {/* Home Team Card */}
-                  <div className="sm:col-span-5 bg-[#F9F9F6] border-2 border-[#090B0A] p-4 rounded-xl shadow-[3px_3px_0px_#090B0A] space-y-2">
-                    <div className="flex items-center justify-between border-b border-[#090B0A] pb-1.5">
+                  <div className="sm:col-span-5 bg-[#F9F9F6] border-2 border-[#090B0A] p-4 rounded-xl shadow-[3px_3px_0px_#090B0A] space-y-3">
+                    <div className="flex items-center justify-between border-b border-[#090B0A] pb-2">
                       <span className="text-[10px] bg-[#090B0A] text-[#00E676] px-2 py-0.5 font-mono font-bold">HOME</span>
                       <span className="text-xs font-mono font-bold text-[#6F756F]">STREAK: {selectedBball.homeTeam.recentForm}</span>
                     </div>
-                    <h3 className="text-2xl font-black text-[#090B0A]">{selectedBball.homeTeam.name}</h3>
-                    <p className="text-xs text-[#6F756F] font-mono">Record: {selectedBball.homeTeam.record} • Net: +{selectedBball.homeTeam.netRating}</p>
-                    <div className="text-2xl sm:text-3xl font-black text-[#090B0A] font-mono pt-1">
+
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-white border-2 border-[#090B0A] rounded-xl p-1 shrink-0 flex items-center justify-center shadow-[2px_2px_0px_#090B0A]">
+                        <img src={selectedBball.homeTeam.logo} alt={selectedBball.homeTeam.name} className="w-full h-full object-contain" />
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-black text-[#090B0A]">{selectedBball.homeTeam.name}</h3>
+                        <p className="text-xs text-[#6F756F] font-mono">Record: {selectedBball.homeTeam.record} • Net: +{selectedBball.homeTeam.netRating}</p>
+                      </div>
+                    </div>
+
+                    <div className="text-2xl sm:text-3xl font-black text-[#090B0A] font-mono pt-1 border-t border-[#090B0A]/10">
                       {formatOdds(selectedBball.modelOutput.homeWinProb, oddsFormat)} WIN
                     </div>
                   </div>
 
                   {/* Score Center Visual Box */}
                   <div className="sm:col-span-2 text-center py-3 bg-[#00E676] border-2 border-[#090B0A] shadow-[3px_3px_0px_#090B0A] rounded-xl space-y-1">
-                    <div className="text-[10px] text-[#090B0A] uppercase font-mono font-black">Projected Score</div>
+                    <div className="text-[10px] text-[#090B0A] uppercase font-mono font-black flex items-center justify-center gap-1">
+                      <Dribbble className="w-3.5 h-3.5" />
+                      <span>Projected Score</span>
+                    </div>
                     <div className="text-2xl font-black text-[#090B0A] font-mono">{selectedBball.modelOutput.projectedHomeScore} - {selectedBball.modelOutput.projectedAwayScore}</div>
                     <div className="text-xs text-[#090B0A] font-black font-mono">
                       Line: {selectedBball.modelOutput.projectedSpread}
@@ -634,14 +649,23 @@ export function App() {
                   </div>
 
                   {/* Away Team Card */}
-                  <div className="sm:col-span-5 bg-[#F9F9F6] border-2 border-[#090B0A] p-4 rounded-xl shadow-[3px_3px_0px_#090B0A] space-y-2 sm:text-right">
-                    <div className="flex items-center justify-between sm:justify-between border-b border-[#090B0A] pb-1.5">
+                  <div className="sm:col-span-5 bg-[#F9F9F6] border-2 border-[#090B0A] p-4 rounded-xl shadow-[3px_3px_0px_#090B0A] space-y-3 sm:text-right">
+                    <div className="flex items-center justify-between sm:justify-between border-b border-[#090B0A] pb-2">
                       <span className="text-xs font-mono font-bold text-[#6F756F]">STREAK: {selectedBball.awayTeam.recentForm}</span>
                       <span className="text-[10px] bg-[#090B0A] text-white px-2 py-0.5 font-mono font-bold">AWAY</span>
                     </div>
-                    <h3 className="text-2xl font-black text-[#090B0A]">{selectedBball.awayTeam.name}</h3>
-                    <p className="text-xs text-[#6F756F] font-mono">Record: {selectedBball.awayTeam.record} • Net: +{selectedBball.awayTeam.netRating}</p>
-                    <div className="text-2xl sm:text-3xl font-black text-[#6F756F] font-mono pt-1">
+
+                    <div className="flex items-center gap-3 sm:flex-row-reverse">
+                      <div className="w-12 h-12 bg-white border-2 border-[#090B0A] rounded-xl p-1 shrink-0 flex items-center justify-center shadow-[2px_2px_0px_#090B0A]">
+                        <img src={selectedBball.awayTeam.logo} alt={selectedBball.awayTeam.name} className="w-full h-full object-contain" />
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-black text-[#090B0A]">{selectedBball.awayTeam.name}</h3>
+                        <p className="text-xs text-[#6F756F] font-mono">Record: {selectedBball.awayTeam.record} • Net: +{selectedBball.awayTeam.netRating}</p>
+                      </div>
+                    </div>
+
+                    <div className="text-2xl sm:text-3xl font-black text-[#6F756F] font-mono pt-1 border-t border-[#090B0A]/10">
                       {formatOdds(selectedBball.modelOutput.awayWinProb, oddsFormat)} WIN
                     </div>
                   </div>

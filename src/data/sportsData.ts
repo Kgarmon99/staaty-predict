@@ -16,6 +16,7 @@ export interface UFCFighter {
   country: string;
   color: string;
   initials: string;
+  image: string;
 }
 
 export interface UFCMatchup {
@@ -56,6 +57,7 @@ export interface BasketballTeam {
   homeWinPct: number;
   recentForm: string;
   color: string;
+  logo: string;
 }
 
 export interface BasketballMatchup {
@@ -106,7 +108,8 @@ export const UFC_MATCHUPS: UFCMatchup[] = [
       finishRate: 74,
       country: 'USA 🇺🇸',
       color: 'from-blue-600 to-indigo-700',
-      initials: 'JJ'
+      initials: 'JJ',
+      image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&auto=format&fit=crop&q=80'
     },
     fighterB: {
       id: 'miocic',
@@ -125,7 +128,8 @@ export const UFC_MATCHUPS: UFCMatchup[] = [
       finishRate: 75,
       country: 'USA 🇺🇸',
       color: 'from-red-600 to-amber-700',
-      initials: 'SM'
+      initials: 'SM',
+      image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&auto=format&fit=crop&q=80'
     },
     modelOutput: {
       winProbA: 71.4,
@@ -177,7 +181,8 @@ export const UFC_MATCHUPS: UFCMatchup[] = [
       finishRate: 83,
       country: 'Brazil 🇧🇷',
       color: 'from-amber-500 to-emerald-600',
-      initials: 'AP'
+      initials: 'AP',
+      image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400&auto=format&fit=crop&q=80'
     },
     fighterB: {
       id: 'ankalaev',
@@ -196,7 +201,8 @@ export const UFC_MATCHUPS: UFCMatchup[] = [
       finishRate: 60,
       country: 'Russia 🇷🇺',
       color: 'from-[#101626] to-slate-800',
-      initials: 'MA'
+      initials: 'MA',
+      image: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&auto=format&fit=crop&q=80'
     },
     modelOutput: {
       winProbA: 58.6,
@@ -248,7 +254,8 @@ export const UFC_MATCHUPS: UFCMatchup[] = [
       finishRate: 72,
       country: 'USA 🇺🇸',
       color: 'from-pink-500 to-purple-600',
-      initials: 'SO'
+      initials: 'SO',
+      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80'
     },
     fighterB: {
       id: 'merab',
@@ -267,7 +274,8 @@ export const UFC_MATCHUPS: UFCMatchup[] = [
       finishRate: 24,
       country: 'Georgia 🇬🇪',
       color: 'from-red-700 to-slate-900',
-      initials: 'MD'
+      initials: 'MD',
+      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80'
     },
     modelOutput: {
       winProbA: 52.4,
@@ -321,7 +329,8 @@ export const BASKETBALL_MATCHUPS: BasketballMatchup[] = [
       ftRate: 21.4,
       homeWinPct: 84.2,
       recentForm: 'W5',
-      color: '#008348'
+      color: '#008348',
+      logo: 'https://a.espncdn.com/i/teamlogos/nba/500/bos.png'
     },
     awayTeam: {
       id: 'den',
@@ -338,7 +347,8 @@ export const BASKETBALL_MATCHUPS: BasketballMatchup[] = [
       ftRate: 20.1,
       homeWinPct: 78.5,
       recentForm: 'W2',
-      color: '#0E2240'
+      color: '#0E2240',
+      logo: 'https://a.espncdn.com/i/teamlogos/nba/500/den.png'
     },
     homeRestDays: 2,
     awayRestDays: 1,
@@ -380,7 +390,8 @@ export const BASKETBALL_MATCHUPS: BasketballMatchup[] = [
       ftRate: 22.5,
       homeWinPct: 81.0,
       recentForm: 'W4',
-      color: '#007AC1'
+      color: '#007AC1',
+      logo: 'https://a.espncdn.com/i/teamlogos/nba/500/okc.png'
     },
     awayTeam: {
       id: 'min',
@@ -397,7 +408,8 @@ export const BASKETBALL_MATCHUPS: BasketballMatchup[] = [
       ftRate: 21.8,
       homeWinPct: 76.5,
       recentForm: 'W1',
-      color: '#236192'
+      color: '#236192',
+      logo: 'https://a.espncdn.com/i/teamlogos/nba/500/min.png'
     },
     homeRestDays: 2,
     awayRestDays: 2,
@@ -439,7 +451,8 @@ export const BASKETBALL_MATCHUPS: BasketballMatchup[] = [
       ftRate: 24.1,
       homeWinPct: 82.5,
       recentForm: 'W4',
-      color: '#000000'
+      color: '#000000',
+      logo: 'https://a.espncdn.com/i/teamlogos/wnba/500/lv.png'
     },
     awayTeam: {
       id: 'nyl',
@@ -456,7 +469,8 @@ export const BASKETBALL_MATCHUPS: BasketballMatchup[] = [
       ftRate: 22.0,
       homeWinPct: 85.0,
       recentForm: 'W3',
-      color: '#6ECEB2'
+      color: '#6ECEB2',
+      logo: 'https://a.espncdn.com/i/teamlogos/wnba/500/ny.png'
     },
     homeRestDays: 2,
     awayRestDays: 2,
@@ -498,7 +512,8 @@ export const BASKETBALL_MATCHUPS: BasketballMatchup[] = [
       ftRate: 23.4,
       homeWinPct: 91.2,
       recentForm: 'W6',
-      color: '#003087'
+      color: '#003087',
+      logo: 'https://a.espncdn.com/i/teamlogos/ncaa/500/150.png'
     },
     awayTeam: {
       id: 'unc',
@@ -515,7 +530,8 @@ export const BASKETBALL_MATCHUPS: BasketballMatchup[] = [
       ftRate: 25.1,
       homeWinPct: 84.6,
       recentForm: 'W3',
-      color: '#7BAFD4'
+      color: '#7BAFD4',
+      logo: 'https://a.espncdn.com/i/teamlogos/ncaa/500/153.png'
     },
     homeRestDays: 3,
     awayRestDays: 3,
@@ -557,7 +573,8 @@ export const BASKETBALL_MATCHUPS: BasketballMatchup[] = [
       ftRate: 22.8,
       homeWinPct: 94.1,
       recentForm: 'W8',
-      color: '#000E2F'
+      color: '#000E2F',
+      logo: 'https://a.espncdn.com/i/teamlogos/ncaa/500/41.png'
     },
     awayTeam: {
       id: 'iowa',
@@ -574,7 +591,8 @@ export const BASKETBALL_MATCHUPS: BasketballMatchup[] = [
       ftRate: 26.2,
       homeWinPct: 89.4,
       recentForm: 'W5',
-      color: '#FFCD00'
+      color: '#FFCD00',
+      logo: 'https://a.espncdn.com/i/teamlogos/ncaa/500/2294.png'
     },
     homeRestDays: 4,
     awayRestDays: 4,
